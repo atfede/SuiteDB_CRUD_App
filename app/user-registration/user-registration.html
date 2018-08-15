@@ -1,0 +1,157 @@
+<style>
+
+    fieldset {
+        border: thin solid #ccc;
+        border-radius: 4px;
+        padding: 20px;
+        padding-left: 40px;
+        background: #fbfbfb;
+    }
+
+    legend {
+        color: #678;
+    }
+
+    .form-control {
+        width: 95%;
+    }
+
+    label small {
+        color: #678 !important;
+    }
+
+    span.req {
+        color: maroon;
+        font-size: 112%;
+    }
+
+    .dateOfBirthPicker {
+        background-color: #fff !important;
+    }
+</style>
+
+<h1 class="page-header">User registration</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form action="" method="post" id="fileForm" role="form">
+                <fieldset>
+                    <legend class="text-center">Complete the form to register. <span class="req"><small> required *</small></span>
+                    </legend>
+
+                    <div class="form-group">
+                        <label for="firstname"><span class="req">* </span> First name: </label>
+                        <input class="form-control" type="text" name="firstname" id="firstname"
+                               onkeyup="validateText(this)"
+                               required/>
+                        <div id="errFirst"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname"><span class="req">* </span> Last name: </label>
+                        <input class="form-control" type="text" name="lastname" id="lastname"
+                               onkeyup="validateText(this)"
+                               placeholder="" required/>
+                        <div id="errLast"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email"><span class="req">* </span> Email Address: </label>
+                        <input class="form-control" type="text" name="email" id="email"
+                               onchange="validateEmail(this.value);" placeholder="please enter a valid email address"
+                               required/>
+                        <div class="status" id="status"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone"><span class="req">* </span> Phone Number: </label>
+                        <input type="text" name="phonenumber" id="phone" class="form-control phone"
+                               maxlength="28" onkeyup="validatePhone(this);"
+                               placeholder="please enter a valid phone number" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address"><span class="req">* </span> Address: </label>
+                        <input type="text" name="address" id="address" class="form-control phone"
+                               maxlength="28" onkeyup="validateAddress(this);" placeholder="please enter your address" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateOfBirth"><span class="req">* </span> Date of birth: </label>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type="text" id="dateOfBirth" class="form-control dateOfBirthPicker" readonly="true"
+                                   required/>
+                            <div class="statusDateOfBirth" id="statusDateOfBirth"></div>
+                            <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comments"><span class="req">* </span> Comments: </label>
+                        <textarea type="text" name="comments" id="comments" class="form-control phone"
+                                  maxlength="28" onkeyup="validateText(this);" placeholder="add a comment"
+                                  required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender"><span class="req">* </span> Address: </label>
+
+                        <select class="form-control input-medium" name="gender" id="gender" required>
+                            <option value="" selected disabled hidden>Gender</option>
+                            <option value="m">Male</option>
+                            <option value="f">Female</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <?php //$date_entered = date('m/d/Y H:i:s'); ?>
+                        <input type="hidden" value="<?php //echo $date_entered; ?>" name="dateregistered">
+                        <input type="hidden" value="0" name="activate"/>
+                        <hr>
+
+                        <input type="checkbox" required name="terms"
+                               onchange="this.setCustomValidity(validity.valueMissing ? 'Please indicate that you accept the Terms and Conditions' : '');"
+                               id="field_terms">
+                        <labe>I agree with the <a href="#"
+                                                  title="You may read our terms and conditions by clicking on this link">terms
+                            and conditions</a> for Registration.
+                        </labe>
+                        <span class="req">* </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-success" type="submit" name="submit_reg" value="Register">
+                    </div>
+
+                </fieldset>
+            </form><!-- ends register form -->
+
+            <script type="text/javascript">
+                document.getElementById("field_terms").setCustomValidity("Please indicate that you accept the Terms and Conditions");
+            </script>
+        </div><!-- ends col-6 -->
+
+        <div class="col-md-6"></div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#dateOfBirth").datepicker({
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            minDate: new Date('1950/01/01'),
+            maxDate: '-1d',
+            onSelect: function (dateText, inst) {
+                validateDateOfBirth(dateText);
+            }
+        })
+    });
+</script>
