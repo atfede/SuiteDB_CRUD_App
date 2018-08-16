@@ -52,7 +52,7 @@ app.controller('memberController', function ($scope, $http, $window) {
         $scope.error = false;
     }
 
-    $scope.addnew = function () {
+    $scope.addUser = function () {
         $http.post(
             "add.php", {
                 'firstname': $scope.firstname,

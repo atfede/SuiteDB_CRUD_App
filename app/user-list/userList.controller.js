@@ -1,11 +1,12 @@
-angular.module('userController', ['angularUtils.directives.dirPagination']) //angular.module('app', ...
+angular.module('userListController', ['angularUtils.directives.dirPagination']) //angular.module('app', ...
 
-    .controller('userController',
+    .controller('userListController',
         [
             '$scope',
             '$http',
             '$window',
-            function ($scope, $http, $window) {
+            '$cookies',
+            function ($scope, $http, $window, $cookies) {
                 $scope.AddModal = false;
                 $scope.EditModal = false;
                 $scope.DeleteModal = false;
@@ -23,11 +24,9 @@ angular.module('userController', ['angularUtils.directives.dirPagination']) //an
                 }
 
                 $scope.fetch = function () {
-                    /*$http.get("fetch.php").success(function(data){
-                     $scope.members = data;
-                     });*/
+                     $scope.members = $cookies.users;
 
-                    $scope.members = [
+/*                    $scope.members = [
                         {memid: 1, firstname: 'Fred', lastname: "Testoni", address: 'Silay City'},
                         {memid: 2, firstname: 'Mark', lastname: "Lopez", address: 'Montevideo City'},
                         {memid: 3, firstname: 'Tito', lastname: "Lopez", address: 'New York City'},
@@ -45,7 +44,7 @@ angular.module('userController', ['angularUtils.directives.dirPagination']) //an
                         {memid: 15, firstname: 'Morpheus', lastname: "Lopez", address: 'Silay City'},
                         {memid: 16, firstname: 'White Bunny', lastname: "Lopez", address: 'Silay City'},
                         {memid: 17, firstname: 'Chris Novoselic', lastname: "Lopez", address: 'Silay City'}
-                    ];
+                    ];*/
                 }
 
                 $scope.sort = function (keyname) {
@@ -58,7 +57,7 @@ angular.module('userController', ['angularUtils.directives.dirPagination']) //an
                     $scope.error = false;
                 }
 
-                $scope.addnew = function () {
+                $scope.addUser = function () {
                     $http.post(
                         "add.php", {
                             'firstname': $scope.firstname,
@@ -146,19 +145,3 @@ angular.module('userController', ['angularUtils.directives.dirPagination']) //an
                 }
 
             }]);
-
-/*
- 'use strict';
-
- angular.module('app.entryList', ['ngRoute'])
-
- .config(['$routeProvider', function($routeProvider) {
- $routeProvider.when('/user-list', {
- templateUrl: 'user-list/user-registration.html',
- controller: 'entryListController'
- });
- }])
-
- .controller('entryListController', [function() {
-
- }]);*/

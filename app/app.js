@@ -3,23 +3,22 @@
 // Declare app level module which depends on views, and components
 angular.module('app', [
     'ui.router',
-    'userController'
+    'userRegistrationController',
+    'userListController',
+    'ngCookies'
 ]).config(function ($stateProvider, $urlRouterProvider) {
-
-//    $locationProvider.hashPrefix(''); // #!
-
         $stateProvider
             .state('index', {
                 url: '/index',
                 templateUrl: "./user-registration/user-registration.html",
-                controller: 'appController',
-                controllerAs: "appCtrl"
+                controller: 'userRegistrationController',
+                controllerAs: "userRegistrationCtrl"
             })
             .state('userList', {
                 url: '/userList',
                 templateUrl: "./user-list/user-list.html",
-                controller: 'userController',
-                controllerAs: "userCtrl"
+                controller: 'userListController',
+                controllerAs: "userListCtrl"
             });
 
         // catch all bad routes
@@ -33,7 +32,6 @@ angular.module('app', [
             '$scope',
             '$rootScope',
             function appController($scope, $rootScope) {
-
                 var self = $scope;
             }
         ]);
