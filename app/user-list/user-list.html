@@ -1,5 +1,5 @@
 <style>
-   .remove-margin-left{
+    .remove-margin-left {
         margin-left: 0;
     }
 </style>
@@ -30,19 +30,40 @@
             <table class="table table-bordered table-striped" style="margin-top:10px;">
                 <thead>
                 <tr>
-                    <th ng-click="sort('firstname')" class="text-center">First Name
+                    <th ng-click="sort('id')" class="text-center">Id
+                        <span class="pull-right">
+                       			<i class="fa fa-sort gray" ng-show="sortKey!='id'"></i>
+                       			<i class="fa fa-sort" ng-show="sortKey=='id'"
+                                   ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
+                       		</span>
+                    </th>
+                    <th ng-click="sort('firstName')" class="text-center">First Name
                         <span class="pull-right">
                        			<i class="fa fa-sort gray" ng-show="sortKey!='firstname'"></i>
                        			<i class="fa fa-sort" ng-show="sortKey=='firstname'"
                                    ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
                        		</span>
                     </th>
-                    <th ng-click="sort('lastname')" class="text-center">Last Name
+                    <th ng-click="sort('lastName')" class="text-center">Last Name
                         <span class="pull-right">
 	                       		<i class="fa fa-sort gray" ng-show="sortKey!='lastname'"></i>
 	                       		<i class="fa fa-sort" ng-show="sortKey=='lastname'"
                                    ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
 	                       	</span>
+                    </th>
+                    <th ng-click="sort('email')" class="text-center">Email
+                        <span class="pull-right">
+                       			<i class="fa fa-sort gray" ng-show="sortKey!='email'"></i>
+                       			<i class="fa fa-sort" ng-show="sortKey=='email'"
+                                   ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
+                       		</span>
+                    </th>
+                    <th ng-click="sort('phone')" class="text-center">Phone
+                        <span class="pull-right">
+                       			<i class="fa fa-sort gray" ng-show="sortKey!='phone'"></i>
+                       			<i class="fa fa-sort" ng-show="sortKey=='phone'"
+                                   ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
+                       		</span>
                     </th>
                     <th ng-click="sort('address')" class="text-center">Address
                         <span class="pull-right">
@@ -51,14 +72,41 @@
                                    ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
                        		</span>
                     </th>
+                    <th ng-click="sort('dateOfBirth')" class="text-center">DOB
+                        <span class="pull-right">
+                       			<i class="fa fa-sort gray" ng-show="sortKey!='dateOfBirth'"></i>
+                       			<i class="fa fa-sort" ng-show="sortKey=='dateOfBirth'"
+                                   ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
+                       		</span>
+                    </th>
+                    <th ng-click="sort('comments')" class="text-center">Comments
+                        <span class="pull-right">
+                       			<i class="fa fa-sort gray" ng-show="sortKey!='comments'"></i>
+                       			<i class="fa fa-sort" ng-show="sortKey=='comments'"
+                                   ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
+                       		</span>
+                    </th>
+                    <th ng-click="sort('gender')" class="text-center">Gender
+                        <span class="pull-right">
+                       			<i class="fa fa-sort gray" ng-show="sortKey!='gender'"></i>
+                       			<i class="fa fa-sort" ng-show="sortKey=='gender'"
+                                   ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
+                       		</span>
+                    </th>
                     <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr dir-paginate="member in members|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
-                    <td>{{ member.firstname }}</td>
-                    <td>{{ member.lastname }}</td>
+                    <td>{{ member.id }}</td>
+                    <td>{{ member.firstName }}</td>
+                    <td>{{ member.lastName }}</td>
+                    <td>{{ member.email }}</td>
+                    <td>{{ member.phone }}</td>
                     <td>{{ member.address }}</td>
+                    <td>{{ member.dateOfBirth }}</td>
+                    <td>{{ member.comments }}</td>
+                    <td>{{ member.gender }}</td>
                     <td>
                         <button type="button" class="btn btn-success" ng-click="showEdit(); selectMember(member);"><i
                                 class="fa fa-edit"></i> Edit
@@ -92,12 +140,12 @@
             <div class="modalBody">
                 <div class="form-group">
                     <label>Firstname:</label>
-                    <input type="text" class="form-control" ng-model="firstname" id="firstname">
+                    <input type="text" class="form-control" ng-model="firstName" id="firstName">
                     <span class="pull-right input-error" ng-show="errorFirstname">{{ errorMessage }}</span>
                 </div>
                 <div class="form-group">
                     <label>Lastname:</label>
-                    <input type="text" class="form-control" ng-model="lastname" id="lastname">
+                    <input type="text" class="form-control" ng-model="lastName" id="lastName">
                     <span class="pull-right input-error" ng-show="errorLastname">{{ errorMessage }}</span>
                 </div>
                 <div class="form-group">
@@ -130,11 +178,11 @@
             <div class="modalBody">
                 <div class="form-group">
                     <label>Firstname:</label>
-                    <input type="text" class="form-control" ng-model="clickMember.firstname" disabled>
+                    <input type="text" class="form-control" ng-model="clickMember.firstName" disabled>
                 </div>
                 <div class="form-group">
                     <label>Lastname:</label>
-                    <input type="text" class="form-control" ng-model="clickMember.lastname">
+                    <input type="text" class="form-control" ng-model="clickMember.lastName">
                 </div>
                 <div class="form-group">
                     <label>Address:</label>
@@ -164,7 +212,7 @@
             </div>
             <div class="modalBody">
                 <h5 class="text-center">Are you sure you want to delete Member</h5>
-                <h2 class="text-center">{{clickMember.firstname}} {{clickMember.lastname}}</h2>
+                <h2 class="text-center">{{clickMember.firstName}} {{clickMember.lastName}}</h2>
             </div>
             <hr>
             <div class="modalFooter">
