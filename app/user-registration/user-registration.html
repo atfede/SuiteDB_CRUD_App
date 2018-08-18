@@ -35,23 +35,23 @@
 <div class="container" ng-controller="userRegistrationController" ng-init="init()"> <!---->
     <div class="row">
         <div class="col-md-6">
-            <form action="" method="post" id="fileForm" role="form">
+            <form method="post" id="fileForm" role="form">
                 <fieldset>
                     <legend class="text-center">Complete the form to register. <span class="req"><small> required *</small></span>
                     </legend>
 
                     <div class="form-group">
-                        <label for="firstname"><span class="req">* </span> First name: </label>
-                        <input class="form-control" type="text" id="firstname"
+                        <label for="firstName"><span class="req">* </span> First name: </label>
+                        <input class="form-control" type="text" id="firstName"
                                ng-model="user.firstName"
-                               onkeyup="validateText(this)"
+                               onkeyup="validateName(this)"
                                required/>
                         <div id="errFirst"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="lastname"> Last name: </label>
-                        <input class="form-control" type="text" id="lastname"
+                        <label for="lastName"> Last name: </label>
+                        <input class="form-control" type="text" id="lastName"
                                ng-model="user.lastName"
                                onkeyup="validateText(this)"
                                placeholder=""/>
@@ -69,17 +69,21 @@
 
                     <div class="form-group">
                         <label for="phone"><span class="req">* </span> Phone Number: </label>
+                        <small><b> e.g:
+                            <smaller> XXX-XXX-XXXX or XXX.XXX.XXXX or XXX XXX XXXX</smaller>
+                        </b></small>
                         <input type="text" id="phone" class="form-control phone"
                                ng-model="user.phone"
                                maxlength="28" onkeyup="validatePhone(this);"
                                placeholder="please enter a valid phone number" required/>
+                        <div class="phone" id="phoneMessage"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="address">Address: </label>
                         <input type="text" id="address" class="form-control phone"
                                ng-model="user.address"
-                               maxlength="28" onkeyup="validateAddress(this);" placeholder="please enter your address"/>
+                               maxlength="28" placeholder="please enter your address"/>
                         <div class="status" id="addressStatus"></div>
                     </div>
 
@@ -93,6 +97,7 @@
                             <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
+                            <input type="text" style="display: none;" id="dob">
                         </div>
 
                     </div>
@@ -107,58 +112,29 @@
                     <div class="form-group">
                         <label for="gender"><span class="req">* </span> Gender: </label>
 
-                        <select class="form-control input-medium" id="gender" ng-model="user.gender" required>
-                            <option value="" selected disabled hidden>Gender</option>
-                            <option value="m">Male</option>
-                            <option value="f">Female</option>
+                        <!--                        <select class="form-control input-medium" id="gender" ng-model="user.gender" required>
+                                                    <option value="" selected disabled>Select gender</option>
+                                                    <option value="m">Male</option>
+                                                    <option value="f">Female</option>
+                                                </select>-->
+
+                        <select id="gender"
+                                ng-init="selectedGenderOption = genderOptions[0].value"
+                                ng-model="selectedGenderOption"
+                                ng-options="option.value as option.name for option in genderOptions">
                         </select>
-                    </div>
 
-
-                    <div class="form-group">
-
-                        <input type="hidden" value="" name="dateregistered">
-                        <input type="hidden" value="0" name="activate"/>
-                        <hr>
-
-                        <input type="checkbox" required name="terms"
-                               onchange="this.setCustomValidity(validity.valueMissing ? 'Please indicate that you accept the Terms and Conditions' : '');"
-                               id="field_terms">
-                        <label>I agree with the <a href="#"
-                                                   title="You may read our terms and conditions by clicking on this link">terms
-                            and conditions</a> for Registration.
-                        </label>
-                        <span class="req">* </span>
                     </div>
 
                     <div class="form-group">
-                        <button class="btn btn-success" ng-click="addUser()">Register</button> <!--name="submit_reg"-->
+                        <input type="button" class="btn btn-success" ng-click="addUser()" value="Register">
                     </div>
 
                 </fieldset>
             </form><!-- ends register form -->
-
-            <script type="text/javascript">
-                document.getElementById("field_terms").setCustomValidity("Please indicate that you accept the Terms and Conditions");
-            </script>
         </div><!-- ends col-6 -->
 
         <div class="col-md-6"></div>
 
     </div>
 </div>
-
-<script>
-    $(function () {
-        $("#dateOfBirth").datepicker({
-            defaultDate: new Date('1998/01/01'),
-            changeYear: true,
-            dateFormat: 'dd/mm/yy',
-            minDate: new Date('1950/01/01'),
-            maxDate: '-1d',
-            onSelect: function (dateText, inst) {
-                validateDateOfBirth(dateText);
-            }
-        })
-    });
-</script>

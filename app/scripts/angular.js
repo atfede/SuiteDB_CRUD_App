@@ -4,14 +4,14 @@ app.controller('memberController', function ($scope, $http, $window) {
     $scope.EditModal = false;
     $scope.DeleteModal = false;
 
-    $scope.errorFirstname = false;
+    $scope.errorFirstName = false;
 
     $scope.showAdd = function () {
         $scope.firstname = null;
         $scope.lastname = null;
         $scope.address = null;
-        $scope.errorFirstname = false;
-        $scope.errorLastname = false;
+        $scope.errorFirstName = false;
+        $scope.errorLastName = false;
         $scope.errorAddress = false;
         $scope.AddModal = true;
     }
@@ -61,29 +61,29 @@ app.controller('memberController', function ($scope, $http, $window) {
             }
         ).success(function (data) {
             if (data.firstname) {
-                $scope.errorFirstname = true;
-                $scope.errorLastname = false;
+                $scope.errorFirstName = true;
+                $scope.errorLastName = false;
                 $scope.errorAddress = false;
                 $scope.errorMessage = data.message;
                 $window.document.getElementById('firstname').focus();
             }
             else if (data.lastname) {
-                $scope.errorFirstname = false;
-                $scope.errorLastname = true;
+                $scope.errorFirstName = false;
+                $scope.errorLastName = true;
                 $scope.errorAddress = false;
                 $scope.errorMessage = data.message;
                 $window.document.getElementById('lastname').focus();
             }
             else if (data.address) {
-                $scope.errorFirstname = false;
-                $scope.errorLastname = false;
+                $scope.errorFirstName = false;
+                $scope.errorLastName = false;
                 $scope.errorAddress = true;
                 $scope.errorMessage = data.message;
                 $window.document.getElementById('address').focus();
             }
             else if (data.error) {
-                $scope.errorFirstname = false;
-                $scope.errorLastname = false;
+                $scope.errorFirstName = false;
+                $scope.errorLastName = false;
                 $scope.errorAddress = false;
                 $scope.error = true;
                 $scope.errorMessage = data.message;

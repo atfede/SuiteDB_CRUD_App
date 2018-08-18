@@ -81,3 +81,11 @@
     color: #FFFFFF;
     border: none;
 }
+
+.btn-danger-wide{
+    width: 100%;
+}
+
+.btn-success-wide{
+    width: 100%;
+}

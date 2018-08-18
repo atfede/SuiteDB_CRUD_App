@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('app', [
     'ui.router',
+    'userService',
     'userRegistrationController',
     'userListController',
     'ngCookies'
@@ -21,12 +22,10 @@ angular.module('app', [
                 controllerAs: "userListCtrl"
             });
 
-        // catch all bad routes
-        // send users to the form page
+        // catch all bad routes and send user to the form page
         $urlRouterProvider.otherwise('/index');
     }
 )
-
     .controller("appController",
         [
             '$scope',

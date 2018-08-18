@@ -6,36 +6,27 @@ angular.module('userListController', ['angularUtils.directives.dirPagination']) 
             '$http',
             '$window',
             '$rootScope',
-            function ($scope, $http, $window, $rootScope) {
+            'userService',
+            '$location',
+            function ($scope, $http, $window, $rootScope, userService, $location) {
                 $scope.AddModal = false;
                 $scope.EditModal = false;
                 $scope.DeleteModal = false;
 
-                $scope.errorFirstname = false;
+                $scope.errorFirstName = false;
 
                 $scope.showAdd = function () {
                     $scope.firstName = null;
                     $scope.lastName = null;
                     $scope.address = null;
-                    $scope.errorFirstname = false;
-                    $scope.errorLastname = false;
+                    $scope.errorFirstName = false;
+                    $scope.errorLastName = false;
                     $scope.errorAddress = false;
                     $scope.AddModal = true;
                 }
 
                 $scope.fetch = function () {
-
-                    $scope.members = $rootScope.users;
-                    // $http({
-                    //     method: 'get',
-                    //     url: 'https://api.myjson.com/bins/1f6sdo',
-                    //     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}
-                    // }).then(function (response) {
-                    //         $scope.members = response.data.users;
-                    //     },
-                    //     function (response) {
-                    //         alert("Error retrieving users!");
-                    //     });
+                    $scope.members = JSON.parse($window.localStorage.getItem("usersLS"));
                 }
 
                 $scope.sort = function (keyname) {
@@ -48,53 +39,9 @@ angular.module('userListController', ['angularUtils.directives.dirPagination']) 
                     $scope.error = false;
                 }
 
-                $scope.addUser = function () {
-                    $http.post(
-                        "add.php", {
-                            'firstname': $scope.firstname,
-                            'lastname': $scope.lastname,
-                            'address': $scope.address,
-                        }
-                    ).success(function (data) {
-                        if (data.firstname) {
-                            $scope.errorFirstname = true;
-                            $scope.errorLastname = false;
-                            $scope.errorAddress = false;
-                            $scope.errorMessage = data.message;
-                            $window.document.getElementById('firstname').focus();
-                        }
-                        else if (data.lastname) {
-                            $scope.errorFirstname = false;
-                            $scope.errorLastname = true;
-                            $scope.errorAddress = false;
-                            $scope.errorMessage = data.message;
-                            $window.document.getElementById('lastname').focus();
-                        }
-                        else if (data.address) {
-                            $scope.errorFirstname = false;
-                            $scope.errorLastname = false;
-                            $scope.errorAddress = true;
-                            $scope.errorMessage = data.message;
-                            $window.document.getElementById('address').focus();
-                        }
-                        else if (data.error) {
-                            $scope.errorFirstname = false;
-                            $scope.errorLastname = false;
-                            $scope.errorAddress = false;
-                            $scope.error = true;
-                            $scope.errorMessage = data.message;
-                        }
-                        else {
-                            $scope.AddModal = false;
-                            $scope.success = true;
-                            $scope.successMessage = data.message;
-                            $scope.fetch();
-                        }
-                    });
-                }
-
                 $scope.selectMember = function (member) {
                     $scope.clickMember = member;
+                    $scope.clickMember.oldEmail = member.email;
                 }
 
                 $scope.showEdit = function () {
@@ -102,18 +49,27 @@ angular.module('userListController', ['angularUtils.directives.dirPagination']) 
                 }
 
                 $scope.updateMember = function () {
-                    $http.post("edit.php", $scope.clickMember)
-                        .success(function (data) {
-                            if (data.error) {
-                                $scope.error = true;
-                                $scope.errorMessage = data.message;
-                                $scope.fetch();
-                            }
-                            else {
-                                $scope.success = true;
-                                $scope.successMessage = data.message;
-                            }
-                        });
+                    var users = JSON.parse($window.localStorage.getItem("usersLS"));
+
+                    var data = _.find(users, function (obj) {
+                        if (obj.email === $scope.clickMember.oldEmail) {
+                            obj.email = $scope.clickMember.email;
+                            return true;
+                        }
+                        return false;
+                    });
+
+                    $window.localStorage.setItem('usersLS', JSON.stringify(users));
+
+                    if (data == null) {
+                        $scope.error = true;
+                        $scope.errorMessage = "Error updating user";
+                        $scope.fetch();
+                    }
+                    else {
+                        $scope.success = true;
+                        $scope.successMessage = "User updated";
+                    }
                 }
 
                 $scope.showDelete = function () {
@@ -121,18 +77,30 @@ angular.module('userListController', ['angularUtils.directives.dirPagination']) 
                 }
 
                 $scope.deleteMember = function () {
-                    $http.post("delete.php", $scope.clickMember)
-                        .success(function (data) {
-                            if (data.error) {
-                                $scope.error = true;
-                                $scope.errorMessage = data.message;
-                            }
-                            else {
-                                $scope.success = true;
-                                $scope.successMessage = data.message;
-                                $scope.fetch();
-                            }
-                        });
+                    var users = JSON.parse($window.localStorage.getItem("usersLS"));
+
+                    var usersLength = users.length;
+
+                    var users = _.filter(users, function (obj) {
+                        return obj.email !== $scope.clickMember.email;
+                    });
+
+                    var usersNewLength = users.length;
+                    $window.localStorage.setItem('usersLS', JSON.stringify(users));
+
+                    if (usersNewLength == usersLength) {
+                        $scope.error = true;
+                        $scope.errorMessage = "Error deleting user";
+                        $scope.fetch();
+                    }
+                    else {
+                        $scope.success = true;
+                        $scope.successMessage = "User deleted";
+                    }
+
+                    setTimeout(function () {
+                        $window.location.reload();
+                    }, 3000)
                 }
 
             }]);

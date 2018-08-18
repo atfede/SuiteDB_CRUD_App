@@ -39,15 +39,15 @@
                     </th>
                     <th ng-click="sort('firstName')" class="text-center">First Name
                         <span class="pull-right">
-                       			<i class="fa fa-sort gray" ng-show="sortKey!='firstname'"></i>
-                       			<i class="fa fa-sort" ng-show="sortKey=='firstname'"
+                       			<i class="fa fa-sort gray" ng-show="sortKey!='firstName'"></i>
+                       			<i class="fa fa-sort" ng-show="sortKey=='firstName'"
                                    ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
                        		</span>
                     </th>
                     <th ng-click="sort('lastName')" class="text-center">Last Name
                         <span class="pull-right">
-	                       		<i class="fa fa-sort gray" ng-show="sortKey!='lastname'"></i>
-	                       		<i class="fa fa-sort" ng-show="sortKey=='lastname'"
+	                       		<i class="fa fa-sort gray" ng-show="sortKey!='lastName'"></i>
+	                       		<i class="fa fa-sort" ng-show="sortKey=='lastName'"
                                    ng-class="{'fa fa-sort-asc':reverse,'fa fa-sort-desc':!reverse}"></i>
 	                       	</span>
                     </th>
@@ -108,10 +108,10 @@
                     <td>{{ member.comments }}</td>
                     <td>{{ member.gender }}</td>
                     <td>
-                        <button type="button" class="btn btn-success" ng-click="showEdit(); selectMember(member);"><i
+                        <button type="button" class="btn btn-success btn-success-wide" ng-click="showEdit(); selectMember(member);"><i
                                 class="fa fa-edit"></i> Edit
                         </button>
-                        <button type="button" class="btn btn-danger" ng-click="showDelete(); selectMember(member);"><i
+                        <button type="button" class="btn btn-danger btn-danger-wide" ng-click="showDelete(); selectMember(member);"><i
                                 class="fa fa-trash"></i> Delete
                         </button>
                     </td>
@@ -128,7 +128,6 @@
             </div>
         </div>
     </div>
-    <!--<?php include('modal.php'); ?>-->
 
     <!-- Add Modal -->
     <div class="myModal" ng-show="AddModal">
@@ -182,11 +181,12 @@
                 </div>
                 <div class="form-group">
                     <label>Lastname:</label>
-                    <input type="text" class="form-control" ng-model="clickMember.lastName">
+                    <input type="text" class="form-control" ng-model="clickMember.lastName" disabled>
                 </div>
                 <div class="form-group">
-                    <label>Address:</label>
-                    <input type="text" class="form-control" ng-model="clickMember.address" disabled>
+                    <label>Email:</label>
+                    <!--<input type="text" class="form-control" ng-model="clickMember.oldEmail" ng-value="clickMember.email" style="display: none" readonly>-->
+                    <input type="text" class="form-control" ng-model="clickMember.email">
                 </div>
             </div>
             <hr>
@@ -227,6 +227,4 @@
             </div>
         </div>
     </div>
-
-
 </div>
