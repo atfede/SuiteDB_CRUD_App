@@ -100,7 +100,7 @@ angular.module('userListController', ['angularUtils.directives.dirPagination']) 
 
                     setTimeout(function () {
                         $window.location.reload();
-                    }, 3000)
+                    }, 2500)
                 }
 
             }]);
